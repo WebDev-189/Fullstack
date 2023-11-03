@@ -20,7 +20,7 @@ function AllConversationsPage() {
 		return <p>Loading...</p>
 	}
 	return (
-		<div>
+		<>
 			{conversations.map((conversation) => {
 				return (
 					<Link
@@ -34,7 +34,7 @@ function AllConversationsPage() {
 					</Link>
 				)
 			})}
-		</div>
+		</>
 	)
 }
 

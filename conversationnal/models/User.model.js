@@ -9,6 +9,17 @@ const userSchema = new Schema(
 			unique: true,
 			trim: true,
 		},
+		password: {
+			type: String,
+			required: true,
+			// This will remove the password from queries made to the DB
+			select: false,
+		},
+		role: {
+			enum: ["admin", "user"],
+			type: String,
+			default: "user",
+		},
 	},
 	{
 		// this second object adds extra properties: `createdAt` and `updatedAt`

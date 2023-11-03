@@ -24,7 +24,7 @@ function OneConversationPage() {
 		return <p>Loading...</p>
 	}
 	return (
-		<div>
+		<>
 			{messages.map((message) => {
 				return (
 					<>
@@ -33,7 +33,7 @@ function OneConversationPage() {
 					</>
 				)
 			})}
-		</div>
+		</>
 	)
 }
 

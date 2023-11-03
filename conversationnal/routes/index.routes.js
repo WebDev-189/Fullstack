@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const User = require("./../models/User.model")
+const { isAuthenticated } = require("./../middlewares/authMiddlewares")
 /**
  * ! All routes are prefixed by /api
  */
@@ -15,8 +16,10 @@ router.get("/", async (req, res, next) => {
 
 router.use("/auth", require("./auth.routes"))
 
+router.use("/users", require("./users.routes"))
+router.use(isAuthenticated)
+
 router.use("/conversation", require("./conversation.routes"))
 router.use("/messages", require("./messages.routes"))
-router.use("/users", require("./users.routes"))
 
 module.exports = router

@@ -16,18 +16,18 @@ const app = express()
 require("./config")(app)
 
 // Fake login
-const User = require("./models/User.model")
+// const User = require("./models/User.model")
 
-app.use(async (req, res, next) => {
-	const id = "65436c0db2b856259b36ed43"
-	try {
-		const connectedUser = await User.findById(id)
-		req.user = connectedUser
-		next()
-	} catch (error) {
-		next(error)
-	}
-})
+// app.use(async (req, res, next) => {
+// 	const id = "65436af3afc9b6bde77ec514"
+// 	try {
+// 		const connectedUser = await User.findById(id)
+// 		req.userId = connectedUser
+// 		next()
+// 	} catch (error) {
+// 		next(error)
+// 	}
+// })
 
 // 👇 Start handling routes here
 const indexRoutes = require("./routes/index.routes")

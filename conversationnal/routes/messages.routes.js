@@ -1,6 +1,7 @@
 const router = require("express").Router()
 const Message = require("./../models/Message.model")
 const Conversation = require("./../models/Conversation.model")
+const { isAdmin } = require("./../middlewares/authMiddlewares")
 /**
  * ! All routes are prefixed by /api/messages
  *
@@ -11,7 +12,7 @@ router.get("/:conversationId", async (req, res, next) => {
 	try {
 		const foundConversation = await Conversation.findOne({
 			_id: conversationId,
-			participants: { $in: [req.user._id] },
+			participants: { $in: [req.userId] },
 		})
 		if (!foundConversation) {
 			return res.status(401).json({ message: "Denied" })
@@ -30,7 +31,7 @@ router.get("/:conversationId", async (req, res, next) => {
 
 router.post("/:conversationId", async (req, res, next) => {
 	try {
-		const creatorId = req.user._id
+		const creatorId = req.userId
 		const { conversationId } = req.params
 		const message = req.body.message
 		const newMessage = await Message.create({
@@ -48,7 +49,7 @@ router.put("/:messageId", async (req, res, next) => {
 	try {
 		const updatedMessage = await Message.findOneAndUpdate(
 			{
-				creator: req.user._id,
+				creator: req.userId,
 				_id: req.params.messageId,
 			},
 			req.body,
@@ -63,11 +64,11 @@ router.put("/:messageId", async (req, res, next) => {
 	}
 })
 
-router.delete("/:messageId", async (req, res, next) => {
+router.delete("/:messageId", isAdmin, async (req, res, next) => {
 	try {
 		await Message.findOneAndDelete({
 			_id: req.params.messageId,
-			creator: req.user._id,
+			// creator: req.userId,
 		})
 		res.sendStatus(204)
 	} catch (error) {

@@ -7,7 +7,7 @@ const Conversation = require("./../models/Conversation.model")
 
 router.post("/", async (req, res, next) => {
 	try {
-		const myId = req.user._id
+		const myId = req.userId
 		const otherId = req.body.id
 		const newConversation = await Conversation.create({
 			participants: [myId, otherId],
@@ -21,7 +21,7 @@ router.post("/", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
 	try {
 		const allConversationsOfUser = await Conversation.find({
-			participants: { $in: [req.user._id] },
+			participants: { $in: [req.userId] },
 		}).populate("participants")
 		res.json(allConversationsOfUser)
 	} catch (error) {
