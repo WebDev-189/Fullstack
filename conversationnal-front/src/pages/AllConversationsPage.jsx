@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react"
-import axios from "axios"
+// import axios from "axios"
+import myApi from "./../service/service.js"
 import { Link } from "react-router-dom"
 function AllConversationsPage() {
 	const [conversations, setConversations] = useState(null)
 
 	async function fetchConversations() {
 		try {
-			const response = await axios.get("http://localhost:5005/api/conversation")
+			const response = await myApi.get("/conversation")
 			setConversations(response.data)
 		} catch (error) {
 			console.log(error)
@@ -18,6 +19,9 @@ function AllConversationsPage() {
 
 	if (!conversations) {
 		return <p>Loading...</p>
+	}
+	if (conversations.length === 0) {
+		return <p>Let's communicate</p>
 	}
 	return (
 		<>

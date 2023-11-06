@@ -21,7 +21,7 @@ router.get("/:conversationId", async (req, res, next) => {
 			conversation: conversationId,
 		})
 			.sort({ createdAt: 1 })
-			.populate("creator", "username -_id")
+			.populate("creator", "username")
 			.select("creator content")
 		res.json(allMessages)
 	} catch (error) {
@@ -64,16 +64,27 @@ router.put("/:messageId", async (req, res, next) => {
 	}
 })
 
-router.delete("/:messageId", isAdmin, async (req, res, next) => {
+router.delete("/:messageId", async (req, res, next) => {
 	try {
 		await Message.findOneAndDelete({
 			_id: req.params.messageId,
-			// creator: req.userId,
+			creator: req.userId,
 		})
 		res.sendStatus(204)
 	} catch (error) {
 		next(error)
 	}
 })
+// router.delete("/:messageId", isAdmin, async (req, res, next) => {
+// 	try {
+// 		await Message.findOneAndDelete({
+// 			_id: req.params.messageId,
+// 			// creator: req.userId,
+// 		})
+// 		res.sendStatus(204)
+// 	} catch (error) {
+// 		next(error)
+// 	}
+// })
 
 module.exports = router

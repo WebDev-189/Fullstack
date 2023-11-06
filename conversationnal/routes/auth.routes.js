@@ -51,14 +51,17 @@ router.post("/signup", async (req, res, next) => {
 router.post("/login", async (req, res, next) => {
 	try {
 		const { username, password } = req.body
-		const foundUser = await User.findOne({ username }).select("password")
+		const foundUser = await User.findOne({ username }).select(
+			"password username"
+		)
 		if (!foundUser) {
 			return res.status(400).json({ message: "Wrong credentials" })
 		}
-		const isPasswordCorrect = bcrypt.compare(password, foundUser.password)
+		const isPasswordCorrect = await bcrypt.compare(password, foundUser.password)
 		if (!isPasswordCorrect) {
 			return res.status(400).json({ message: "Wrong credentials" })
 		}
+		// console.log(foundUser, isPasswordCorrect, { username, password })
 
 		const payload = { _id: foundUser._id }
 

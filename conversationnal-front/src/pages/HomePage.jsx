@@ -1,5 +1,17 @@
+import { useAuth } from "../context/AuthContext"
+import { Link } from "react-router-dom"
+import UserDisplayer from "./../components/UserDisplayer/UserDisplayer"
 function HomePage() {
-	return <p>HomePage</p>
+	const { isLoggedIn } = useAuth()
+
+	if (!isLoggedIn) {
+		return (
+			<p>
+				Please <Link to="/login">Log in</Link>
+			</p>
+		)
+	}
+	return <UserDisplayer />
 }
 
 export default HomePage
