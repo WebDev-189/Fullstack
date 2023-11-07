@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom"
 import SpanifiedTitle from "../SpanifiedTitle/SpanifiedTitle"
+import Avatar from "../Avatar/Avatar"
 import "./Navbar.css"
 import { useAuth } from "./../../context/AuthContext"
 
@@ -20,6 +21,11 @@ function Navbar() {
 					<li>
 						<NavLink to="/">Home</NavLink>
 					</li>
+					{isLoggedIn && user && (
+						<>
+							<Avatar size="m" url={user.picture} />
+						</>
+					)}
 					<li>
 						<NavLink to="/about">About</NavLink>
 					</li>

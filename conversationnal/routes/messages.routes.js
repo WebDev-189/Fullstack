@@ -21,7 +21,7 @@ router.get("/:conversationId", async (req, res, next) => {
 			conversation: conversationId,
 		})
 			.sort({ createdAt: 1 })
-			.populate("creator", "username")
+			.populate("creator", "username picture")
 			.select("creator content")
 		res.json(allMessages)
 	} catch (error) {

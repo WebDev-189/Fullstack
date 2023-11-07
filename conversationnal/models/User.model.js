@@ -9,6 +9,10 @@ const userSchema = new Schema(
 			unique: true,
 			trim: true,
 		},
+		picture: {
+			type: String,
+			default: "avatar.avif",
+		},
 		password: {
 			type: String,
 			required: true,

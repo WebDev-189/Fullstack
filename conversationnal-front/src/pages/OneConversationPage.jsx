@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { useAuth } from "../context/AuthContext.jsx"
 import { useParams } from "react-router-dom"
 import myApi from "./../service/service.js"
+import Avatar from "../components/Avatar/Avatar.jsx"
 
 function OneConversationPage() {
 	const [messages, setMessages] = useState(null)
@@ -45,10 +46,13 @@ function OneConversationPage() {
 		<>
 			{messages.map((message) => {
 				const isMe = message.creator._id === user._id
+				const side = isMe ? "marginLeft" : "marginRight"
 				console.log(message.creator)
 				return (
-					<>
-						<h4 key={message._id}>{message.creator.username}</h4>
+					<React.Fragment key={message._id}>
+						<div>
+							<Avatar size="s" url={message.creator.picture} />
+						</div>
 						<div
 							style={{
 								display: "flex",
@@ -57,7 +61,7 @@ function OneConversationPage() {
 							<p>{message.content} </p>
 							{isMe && <div onClick={() => handleDelete(message._id)}>🗑️</div>}
 						</div>
-					</>
+					</React.Fragment>
 				)
 			})}
 
